@@ -52,6 +52,7 @@ strchr(const char *s, char c)
   return 0;
 }
 
+//  get a line from stdin with max line lenth max including '\n'
 char*
 gets(char *buf, int max)
 {
