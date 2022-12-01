@@ -97,6 +97,19 @@ allocpid() {
   return pid;
 }
 
+// get number of existing processes, by mingxi 
+int getnproc()
+{
+  int nproc = 0;
+  for(int i = 0;i<NPROC;i++){
+    if(proc[i].state != UNUSED){
+      nproc++;
+    }
+  }
+
+  return nproc;
+}
+
 // Look in the process table for an UNUSED proc.
 // If found, initialize state required to run in the kernel,
 // and return with p->lock held.
@@ -291,6 +304,9 @@ fork(void)
 
   // copy saved user registers.
   *(np->trapframe) = *(p->trapframe);
+
+  // copy tmask
+  np->tmask = p->tmask;
 
   // Cause fork to return 0 in the child.
   np->trapframe->a0 = 0;
